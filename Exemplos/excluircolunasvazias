@@ -1,0 +1,9 @@
+(tabela as table) =>
+let
+  Fonte = tabela,
+  Profile = Table.Profile (Fonte),
+  VerificarColunasVazias = Table.AddColumn(Profile, "Dados", each [Count] - [NullCount], type number),
+  ExcluirColunasVazias = Table.SelectRows(VerificarColunasVazias, each ([Dados] <> 0))[Column],
+  ColunasSelecionadas = Table.SelectColumns (Fonte, ExcluirColunasVazias)
+in
+  ColunasSelecionadas
